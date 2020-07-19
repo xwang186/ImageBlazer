@@ -8,12 +8,16 @@
         class="d-flex justify-center align-center"
         :class="{'margin-vertical': image == null}">
       <div height="500">
-        <div
-            v-if="image != null">
+        <div v-if="image != null">
             <v-img @click="removeImage" :src="image"/>
         </div>
         <div v-else>
           <input type="file" @change="uploadImage($event)">
+        </div>
+        <div>
+            <h1>Cloudinary</h1>
+            <cld-image cloudName="demo" publicId="sample" width="300" crop="scale" />
+            <button id="upload_widget" class="cloudinary-button">Upload files</button>
         </div>
       </div>
     </v-card-text>
