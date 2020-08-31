@@ -4,6 +4,7 @@ cd ./project
 
 # activate venv environment
 python3 -m venv venv
+
 . venv/bin/activate
 
 # install packages
