@@ -41,7 +41,7 @@ export default {
             const formData = new FormData()
             formData.append('image', selectedFile)
 
-            axios.post('http://192.168.10.3:8000/apis/images/process/', formData)
+            axios.post('http://127.0.0.1:8000/apis/images/process/', formData)
             .then(res=>{
               this.image = res.data
               this.extension = res.headers['content-type']

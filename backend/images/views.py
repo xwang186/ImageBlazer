@@ -15,6 +15,8 @@ from rest_framework.parsers import MultiPartParser, FileUploadParser
 from PIL import Image
 import numpy as np
 
+from .imageprocess.grayscale import grayscale
+
 # Create your views here.
 class ImageViewSet(viewsets.ViewSet):
 
@@ -34,16 +36,21 @@ class ImageViewSet(viewsets.ViewSet):
 
         # algorthm to change image grey-scale
         img = Image.open(io.BytesIO(image.read()))
-        pixels = img.load()
 
-        w, h = img.size
-        for i in range(w):
-            for j in range(h):
-                R = pixels[i, j][0]
-                G = pixels[i, j][1]
-                B = pixels[i, j][2]
-                gray = R*0.299 + G*0.587 + B*0.114
-                pixels[i, j] = (int(gray), int(gray), int(gray))
+        out_np =np.array(img)
+
+        img = Image.fromarray(grayscale(out_np, True))
+
+        # pixels = img.load()
+        # w, h = img.size
+        # for i in range(w):
+        #     for j in range(h):
+        #         R = pixels[i, j][0]
+        #         G = pixels[i, j][1]
+        #         B = pixels[i, j][2]
+        #         gray = R*0.299 + G*0.587 + B*0.114
+        #         pixels[i, j] = (int(gray), int(gray), int(gray))
+
         buffered = io.BytesIO()
         img.save(buffered, format='png')
         result_image = base64.b64encode(buffered.getvalue())
